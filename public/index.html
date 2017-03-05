@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Anguflix</title>
+</head>
+
+<body ng-app="movieApp">
+    <div id="myCollectionContainer" ng-controller="myCollectionCtrl">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h1>My Collection</h1>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search By Title" ng-model="movieName">
+                    <select class="form-control" ng-model="movieYear">
+                        <option value>Any Year</option>
+                        <option value="1982">1982</option>
+                        <option value="1983">1983</option>
+                        <option value="1984">1984</option>
+                        <option value="1985">1985</option>
+                        <option value="1986">1986</option>
+                        <option value="1987">1987</option>
+                        <option value="1988">1988</option>
+                        <option value="1989">1989</option>
+                        <option value="1990">1990</option>
+                        <option value="1991">1991</option>
+                        <option value="1992">1992</option>
+                        <option value="1993">1993</option>
+                        <option value="1994">1994</option>
+                        <option value="1995">1995</option>
+                        <option value="1996">1996</option>
+                        <option value="1997">1997</option>
+                        <option value="1998">1998</option>
+                        <option value="1999">1999</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                    </select>
+                    <i class="fa fa-trash-o" ng-click="showRemoveOption()" ng-hide="trashClicked"></i>
+                    <i class="fa fa-check" ng-click="showRemoveOption()" ng-show="trashClicked"></i>
+                </div>
+                <div id="remainingBudget">
+                    <h4> Budget Left: {{budget | currency}} </h4>
+                    <a href="#" ng-show="outOfBudget" ng-click="addToBudget()">Add to budget</a>
+                </div>
+            </div>
+        </div>
+        <div id="outOfBudgetContainer" ng-show="outOfBudget">
+            <h2>You are out of money. Add to your budget to select more movies</h2>
+        </div>
+        <div id="emptyCollectionContainer" ng-hide="movies.length">
+            <h3>Select movies from below to add to your collection </h3>
+            <hr>
+        </div>
+        <div class="movies">
+            <div class="col-md-4" ng-repeat="movie in movies | filter:{name:movieName, date:movieYear} track by $index">
+                <div class="column-inner" ng-click="addToMyCollection(movie)">
+                    <div class="removeButton" ng-show="trashClicked">
+                        <a href="#" ng-click="removeFromMyCollection(movie)">Remove</a>
+                    </div>
+                    <h3>{{movie.name}}</h3>
+                    <h4>{{movie.date}}</h4>
+                    <h5>{{movie.synopsis}}</h5>
+                    <img ng-src="{{movie.image}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="allMoviesContainer" ng-controller="allMoviesCtrl">
+        <h2>All Movies</h2>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search By Title" ng-model="movieName">
+        </div>
+        <div class="movies">
+            <div class="col-md-4" ng-repeat="movie in movies | filter:{name:movieName} track by $index">
+                <div class="column-inner" ng-click="addToMyCollection(movie)">
+                    <div class="movieImg">
+                        <img ng-src="{{movie.image}}" />
+                    </div>
+                    <h3>{{movie.name}}</h3>
+                    <h4>{{movie.date}}</h4>
+                    <h5>{{movie.synopsis}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="angular/angular.js">
+    </script>
+    <script src="app.js"></script>
+    <script src="controller.js"></script>
+    <script src="service.js"></script>
+    <script src="myCollectionCtrl.js"></script>
+</body>
+
+</html>
